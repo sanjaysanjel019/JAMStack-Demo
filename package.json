@@ -7,7 +7,9 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "gridsome": "^0.7.0",
+    "vee-validate": "^3.4.5",
     "vuetify": "^2.4.2",
     "webpack-node-externals": "^2.5.2"
   }

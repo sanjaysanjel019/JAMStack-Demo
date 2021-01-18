@@ -1,6 +1,5 @@
-<!-- src/components/Footer.vue -->
 <template>
-  <v-footer absolute padless>
+  <v-footer padless>
     <v-card flat tile class="blue lighten-1 white--text text-center">
       <v-card-text>
         <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
@@ -20,11 +19,12 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Mealsers</strong>
+        {{ new Date().getFullYear() }} — <strong>Mealzers</strong>
       </v-card-text>
     </v-card>
   </v-footer>
 </template>
+
 <script>
 export default {
   data: () => ({

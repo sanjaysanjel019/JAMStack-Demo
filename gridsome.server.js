@@ -1,16 +1,34 @@
-// Server API makes it possible to hook into various parts of Gridsome
-// on server-side and add custom data to the GraphQL data layer.
-// Learn more: https://gridsome.org/docs/server-api/
+const nodeExternals = require('webpack-node-externals');
+const axios = require('axios');
+module.exports = function(api) {
+	api.chainWebpack((config, { isServer }) => {
+		if (isServer) {
+			config.externals([
+				nodeExternals({
+					allowlist: [/^vuetify/]
+				})
+			]);
+		}
+	});
 
-// Changes here require a server restart.
-// To restart press CTRL + C in terminal and run `gridsome develop`
+	api.loadSource(async (actions) => {
+		// Use the Data store API here: https://gridsome.org/docs/data-store-api
+		const { data } = await axios.get('http://localhost:1337/products');
+		const collection = actions.addCollection({
+			typeName: 'Product'
+		});
+		for (const product of data) {
+			collection.addNode({
+				id: product.id,
+				title: product.title,
+				price: product.price,
+				rating: product.rating,
+				description: product.description,
+				image: product.image.formats.thumbnail.url,
+				instructions: product.instructions
+			});
+		}
 
-module.exports = function (api) {
-  api.loadSource(({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-  })
-
-  api.createPages(({ createPage }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
-  })
-}
+		api.createPages(({ createPages }) => {});
+	});
+};

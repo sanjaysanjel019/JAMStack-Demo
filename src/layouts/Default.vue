@@ -2,6 +2,17 @@
   <template>
     <v-app>
       <div>
+        <div
+  hidden
+  id="snipcart"
+  data-api-key="NWJiMjkwYmItN2ZhNC00ZTU2LTg5NjktNTUyZDdiZGZiZDFkNjM3NDY1ODc0MTM0NDgxODIz"
+></div>
+
+<v-btn class=" snipcart-checkout" icon>
+  <v-icon>mdi-cart</v-icon>
+  <span class="snipcart-total-items"></span>
+  <span class="snipcart-total-price"></span>
+</v-btn>
         <v-app-bar
           absolute color="blue"
           dark shrink-on-scroll
@@ -93,9 +104,18 @@ export default {
     const drawer = false;
     const group = null;
     return {
+      totalPrice: 0,
       drawer,
       group
     };
+  },
+  methods:{
+     getTotalPrice() {
+      return Snipcart.store.getState().cart.total;
+    },
+  },
+  mounted(){
+        this.totalPrice = this.getTotalPrice();
   },
   watch: {
     group() {
